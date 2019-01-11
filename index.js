@@ -7,7 +7,12 @@ import {
   toggleWidget,
   toggleInputDisabled,
   dropMessages,
-  isWidgetOpened
+  isWidgetOpened,
+  changeConversation,
+  getConversation,
+  changeTitle,
+  changeSubtitle,
+  changeBadge,
 } from './src/store/dispatcher';
 
 export {
@@ -19,5 +24,10 @@ export {
   toggleWidget,
   toggleInputDisabled,
   dropMessages,
-  isWidgetOpened
+  isWidgetOpened,
+  changeConversation,
+  getConversation,
+  changeTitle,
+  changeSubtitle,
+  changeBadge,
 };

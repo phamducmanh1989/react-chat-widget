@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
-
+import { Map, List } from 'immutable';
 import { hideAvatar } from '@actions';
 
 import './styles.scss';
@@ -23,7 +23,8 @@ class Messages extends Component {
 
   getComponentToRender = message => {
     const ComponentToRender = message.get('component');
-    const previousMessage = this.props.messages.get()
+    var messages = this.getMessages(messages);
+    const previousMessage = messages.get()
     if (message.get('type') === 'component') {
       return <ComponentToRender {...message.get('props')} />;
     }
@@ -31,17 +32,29 @@ class Messages extends Component {
   };
 
   shouldRenderAvatar = (message, index) => {
-    const previousMessage = this.props.messages.get(index - 1);
+    var messages = this.getMessages(messages);
+    const previousMessage = messages.get(index - 1);
     if (message.get('showAvatar') && previousMessage.get('showAvatar')) {
       this.props.dispatch(hideAvatar(index));
     }
   }
 
+  getMessages = () => {
+    const { conversations, conversationID } = this.props;
+    var messages = List([]);
+    if (conversations.has(conversationID)) {
+       messages = conversations.get(conversationID)
+    }
+    return messages;
+  }
+
   render() {
-    const { messages, profileAvatar } = this.props;
+    const { profileAvatar } = this.props;
+    var messages = this.getMessages(messages);
     return (
       <div id="messages" className="rcw-messages-container">
-        {messages.map((message, index) =>
+        {
+          messages.map((message, index) =>
           <div className="rcw-message" key={index}>
             {profileAvatar &&
               message.get('showAvatar') &&
@@ -56,10 +69,12 @@ class Messages extends Component {
 }
 
 Messages.propTypes = {
-  messages: ImmutablePropTypes.listOf(ImmutablePropTypes.map),
+  conversations: ImmutablePropTypes.map,
+  conversationID: PropTypes.string,
   profileAvatar: PropTypes.string
 };
 
 export default connect(store => ({
-  messages: store.messages
+  conversations: store.messages,
+  conversationID: store.behavior.get('conversationID'),
 }))(Messages);

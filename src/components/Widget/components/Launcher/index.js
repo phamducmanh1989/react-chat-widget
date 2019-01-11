@@ -23,5 +23,6 @@ Launcher.propTypes = {
 };
 
 export default connect(store => ({
-  chatOpened: store.behavior.get('showChat')
+  chatOpened: store.behavior.get('showChat'),
+  badge: store.behavior.get('badge')
 }))(Launcher);

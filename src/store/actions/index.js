@@ -12,23 +12,26 @@ export function toggleInputDisabled() {
   };
 }
 
-export function addUserMessage(text) {
+export function addUserMessage(conversationID, text) {
   return {
     type: actions.ADD_NEW_USER_MESSAGE,
+    conversationID,
     text
   };
 }
 
-export function addResponseMessage(text) {
+export function addResponseMessage(conversationID, text) {
   return {
     type: actions.ADD_NEW_RESPONSE_MESSAGE,
+    conversationID,
     text
   };
 }
 
-export function addLinkSnippet(link) {
+export function addLinkSnippet(conversationID, link) {
   return {
     type: actions.ADD_NEW_LINK_SNIPPET,
+    conversationID,
     link
   };
 }
@@ -51,5 +54,33 @@ export function dropMessages() {
 export function hideAvatar() {
   return {
     type: actions.HIDE_AVATAR
+  };
+}
+
+export function changeConversation(newConversationID) {
+  return {
+    type: actions.CHANGE_CONVERSATION,
+    newConversationID
+  };
+}
+
+export function changeTitle(newTitle) {
+  return {
+    type: actions.CHANGE_TITLE,
+    newTitle
+  };
+}
+
+export function changeSubtitle(newSubtitle) {
+  return {
+    type: actions.CHANGE_SUBTITLE,
+    newSubtitle
+  };
+}
+
+export function changeBadge(newBadge) {
+  return {
+    type: actions.CHANGE_BADGE,
+    newBadge
   };
 }

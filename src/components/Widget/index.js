@@ -21,7 +21,7 @@ class Widget extends Component {
     event.preventDefault();
     const userInput = event.target.message.value;
     if (userInput) {
-      this.props.dispatch(addUserMessage(userInput));
+      this.props.dispatch(addUserMessage(this.props.conversationID, userInput));
       this.props.handleNewUserMessage(userInput);
     }
     event.target.message.value = '';
@@ -43,6 +43,7 @@ class Widget extends Component {
         badge={this.props.badge}
         autofocus={this.props.autofocus}
         customLauncher={this.props.customLauncher}
+        conversationID={this.props.conversationID}
       />
     );
   }
@@ -59,7 +60,10 @@ Widget.propTypes = {
   fullScreenMode: PropTypes.bool,
   badge: PropTypes.number,
   autofocus: PropTypes.bool,
-  customLauncher: PropTypes.func
+  customLauncher: PropTypes.func,
+  conversationID: PropTypes.string,
 };
 
-export default connect()(Widget);
+export default connect(store => ({
+  conversationID: store.behavior.get('conversationID')
+}))(Widget);
