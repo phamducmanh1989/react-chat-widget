@@ -4,7 +4,7 @@ import behavior from './reducers/behaviorReducer';
 import messages from './reducers/messagesReducer';
 import logger from 'redux-logger';
 const reducer = combineReducers({ behavior, messages });
-const DEBUG = process.env.NODE_ENV !== 'production';
+const DEBUG = window._env_.NODE_ENV !== 'prod';
 
 const middleware = [
   DEBUG && logger,
